@@ -12,5 +12,3 @@ jobs:
     -   uses: actions/checkout@v4
     -   name: build container
         run: docker build -t interview .
-    # - name: run tests
-    #   uses: liatrio/github-actions/apprentice-action@master
