@@ -2,8 +2,13 @@ name: Liatrio Tests
 on: push
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: run tests
-      uses: liatrio/github-actions/apprentice-action@master
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        -   uses: actions/checkout@v4
+        -   name: Build Container
+            run: docker build -t interview_test .
+        -   name: Run Container
+            run: docker run -p 80:80 interview_test
+        -   name: run tests
+            uses: liatrio/github-actions/apprentice-action@master
