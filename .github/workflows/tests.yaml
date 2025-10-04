@@ -7,8 +7,10 @@ jobs:
         steps:
         -   uses: actions/checkout@v4
         -   name: Build Container
-            run: docker build -t interview_test .
+            run: docker build -t interview .
         -   name: Run Container
-            run: docker run -p 80:80 interview_test
+            run: docker run --rm -d -p 80:80 --name test interview
         -   name: run tests
             uses: liatrio/github-actions/apprentice-action@master
+        -   name: Stop Container
+            run: docker stop test
