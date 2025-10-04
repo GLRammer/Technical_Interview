@@ -22,5 +22,5 @@ func main() {
 		return c.Send(outString)
 	})
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":80"))
 }
