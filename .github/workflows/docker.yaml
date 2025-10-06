@@ -9,10 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    -   uses: actions/checkout@v4
-    # versioning using run id
-    -   name: Build Container
-        run: docker build -t interview_v:${{github.run_id}} .
     # push to Docker Hub using official Docker code
     -   name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -25,6 +21,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
     -   name: Build and push
         uses: docker/build-push-action@v6
+    # versioning using run id
         with:
           push: true
           tags: glrammer/technical_interview:${{github.run_id}}
@@ -34,3 +31,16 @@ jobs:
         with:
           push: true
           tags: glrammer/technical_interview:release
+    -   name: Azure Login
+        if: ${{github.event_name == 'push'}}
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.TECHNICALINTERVIEW_AZURE_CREDENTIALS }}
+    -   name: Azure Push
+        if: ${{github.event_name == 'push'}}
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          containerAppName: technical-interview
+          resourceGroup: Liatrio
+          imageToDeploy: docker.io/glrammer/technical_interview:release
