@@ -11,6 +11,6 @@ jobs:
         -   name: Run Container
             run: docker run --rm -d -p 80:80 --name test interview
         -   name: run tests
-            uses: liatrio/github-actions/apprentice-action@master@v1.0.0
+            uses: liatrio/github-actions/apprentice-action@master@v1
         -   name: Stop Container
             run: docker stop test
