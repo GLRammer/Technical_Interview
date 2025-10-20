@@ -17,7 +17,7 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		out := Output{Message: "My name is Gary Layman, This is a demo.", Timestamp: time.Now().UnixMilli()}
+		out := Output{Message: "My name is Gary Layman, This is a demo.", Timestamp: time.Now()}
 		outString, _ := json.Marshal(out)
 		return c.Send(outString)
 	})
